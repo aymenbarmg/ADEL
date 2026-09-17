@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10051d">
+<title>عادل - عجلة الحظ</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+:root{
+    --bg:#08040f;
+    --card:#13091f;
+    --card2:#1b0d2b;
+    --border:#7628b8;
+    --text:#fff;
+    --muted:#aaa;
+    --primary:#8b2be2;
+    --primary2:#d12ce9;
+    --danger:#ff405b;
+    --gold:#ffd43b;
+}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 50% 15%,#35105c 0,#13051f 30%,#08040f 65%);
+    overflow-x:hidden;
+}
+
+body.light{
+    --bg:#f4eff8;
+    --card:#fff;
+    --card2:#f4eafa;
+    --text:#19121f;
+    --muted:#666;
+    background:#f4eff8;
+}
+
+/* الخلفية */
+.bg-stars{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+    background-image:
+        radial-gradient(#fff 1px,transparent 1px),
+        radial-gradient(#c75cff 1px,transparent 1px);
+    background-size:80px 80px,120px 120px;
+    opacity:.15;
+}
+
+/* الحاوية */
+.app{
+    width:min(1100px,96%);
+    margin:auto;
+    padding:18px 0 30px;
+}
+
+/* الهيدر */
+header{
+    text-align:center;
+    position:relative;
+    margin-bottom:18px;
+}
+
+.logo{
+    font-size:48px;
+    font-weight:900;
+    background:linear-gradient(90deg,#ffdd62,#ff65e8,#8e5cff);
+    -webkit-background-clip:text;
+    color:transparent;
+    text-shadow:0 0 25px #c52dff55;
+}
+
+.subtitle{
+    color:#ffd83d;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:-5px;
+}
+
+.top-btns{
+    position:absolute;
+    top:5px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    pointer-events:none;
+}
+
+.top-btn{
+    pointer-events:auto;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid #9c52d8;
+    background:#160922cc;
+    color:#fff;
+    font-size:21px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.top-btn:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 20px #b42cff88;
+}
+
+/* الإحصائيات */
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:15px auto;
+}
+
+.stat{
+    background:linear-gradient(145deg,#1c0b2c,#0e0716);
+    border:1px solid #7225a8;
+    border-radius:18px;
+    padding:13px;
+    text-align:center;
+    box-shadow:0 8px 30px #0005;
+}
+
+.stat-icon{
+    font-size:24px;
+}
+
+.stat-number{
+    font-size:25px;
+    font-weight:bold;
+    color:#fff;
+}
+
+.stat-label{
+    color:#bbb;
+    font-size:13px;
+}
+
+/* العجلة */
+.wheel-section{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:10px 0 25px;
+}
+
+.wheel-box{
+    position:relative;
+    width:min(88vw,560px);
+    aspect-ratio:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+canvas{
+    width:100%;
+    height:100%;
+    filter:drop-shadow(0 0 20px #a52cff77);
+}
+
+.pointer{
+    position:absolute;
+    top:-5px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    width:0;
+    height:0;
+    border-left:22px solid transparent;
+    border-right:22px solid transparent;
+    border-top:50px solid #ffd43b;
+    filter:drop-shadow(0 4px 6px #000);
+}
+
+.pointer:after{
+    content:"";
+    position:absolute;
+    left:-8px;
+    top:-48px;
+    width:16px;
+    height:16px;
+    background:#fff2a0;
+    border-radius:50%;
+}
+
+/* زر وسط العجلة */
+.spin-center{
+    position:absolute;
+    width:115px;
+    height:115px;
+    border-radius:50%;
+    border:5px solid #9d32e7;
+    background:radial-gradient(circle,#3c125e,#150725);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:
+        0 0 15px #b82eff,
+        inset 0 0 20px #000;
+    z-index:4;
+}
+
+.spin-center:hover{
+    transform:scale(1.05);
+}
+
+.spin-center:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/* الفائز */
+.winner{
+    text-align:center;
+    background:linear-gradient(145deg,#170925,#0d0616);
+    border:1px solid #9c37d4;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:20px;
+    box-shadow:0 0 30px #b52cff25;
+}
+
+.winner-title{
+    color:#ffd43b;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.winner-name{
+    font-size:31px;
+    font-weight:900;
+    margin-top:7px;
+    min-height:38px;
+}
+
+.winner-socials{
+    margin-top:8px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+/* الأقسام */
+.main-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.panel{
+    background:linear-gradient(145deg,#150921,#0c0613);
+    border:1px solid #7225a8;
+    border-radius:20px;
+    padding:18px;
+}
+
+.panel-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+/* الفورم */
+.photo-upload{
+    width:100%;
+    height:130px;
+    border:2px dashed #9e45d3;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+    margin-bottom:12px;
+    overflow:hidden;
+}
+
+.photo-upload:hover{
+    background:#ffffff08;
+}
+
+.photo-upload img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+}
+
+.photo-icon{
+    font-size:34px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin-bottom:10px;
+    border-radius:13px;
+    border:1px solid #5e3379;
+    outline:none;
+    background:#0d0715;
+    color:white;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#c33cff;
+    box-shadow:0 0 10px #b32cff33;
+}
+
+body.light input{
+    background:#fff;
+    color:#222;
+}
+
+/* الأزرار */
+.btn{
+    border:0;
+    border-radius:13px;
+    padding:13px 17px;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    width:100%;
+    background:linear-gradient(90deg,#7624d4,#d02cdf);
+    box-shadow:0 7px 20px #9d29dc44;
+}
+
+.btn-danger{
+    background:#551222;
+    color:#ff8293;
+}
+
+.btn-reset{
+    background:#21152c;
+}
+
+/* قائمة المتسابقين */
+.contestants{
+    max-height:460px;
+    overflow-y:auto;
+    padding-left:3px;
+}
+
+.contestant{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    background:#10081a;
+    border:1px solid #352044;
+    border-radius:14px;
+    padding:9px;
+    margin-bottom:9px;
+}
+
+body.light .contestant{
+    background:#f7f2fa;
+}
+
+.avatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #a844d5;
+    flex-shrink:0;
+}
+
+.default-avatar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#3b1555;
+    font-size:20px;
+}
+
+.contestant-info{
+    flex:1;
+    min-width:0;
+}
+
+.contestant-name{
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.social-row{
+    display:flex;
+    gap:7px;
+    margin-top:4px;
+}
+
+.social{
+    width:29px;
+    height:29px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.instagram{
+    background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+    color:white;
+}
+
+.telegram{
+    background:#159ed9;
+    color:white;
+}
+
+.delete-btn{
+    border:0;
+    background:#48121b;
+    color:#ff687a;
+    width:35px;
+    height:35px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+/* الأزرار السفلية */
+.bottom-actions{
+    display:grid;
+    grid-template-columns:1fr 1.5fr 1fr;
+    gap:12px;
+    margin-top:18px;
+}
+
+.bottom-actions .btn-primary{
+    width:auto;
+}
+
+/* رسالة فارغة */
+.empty{
+    text-align:center;
+    color:#999;
+    padding:30px 10px;
+}
+
+/* الاحتفال */
+.confetti{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:100;
+    overflow:hidden;
+}
+
+.confetti-piece{
+    position:absolute;
+    width:9px;
+    height:15px;
+    top:-20px;
+    animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* نافذة الإعدادات */
+.modal{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    z-index:200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(450px,100%);
+    background:#160922;
+    border:1px solid #8934bd;
+    border-radius:22px;
+    padding:22px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    left:15px;
+    top:15px;
+    border:0;
+    background:#32123f;
+    color:#fff;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.modal h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.setting{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#0e0716;
+    padding:15px;
+    border-radius:13px;
+    margin-bottom:10px;
+}
+
+/* السويتش */
+.switch{
+    position:relative;
+    width:48px;
+    height:25px;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:#444;
+    cursor:pointer;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:19px;
+    height:19px;
+    left:3px;
+    top:3px;
+    border-radius:50%;
+    background:white;
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:#9631d0;
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(23px);
+}
+
+/* الجوال */
+@media(max-width:700px){
+    .app{
+        width:94%;
+        padding-top:12px;
+    }
+
+    .logo{
+        font-size:39px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .bottom-actions{
+        grid-template-columns:1fr;
+    }
+
+    .bottom-actions .btn-primary{
+        width:100%;
+    }
+
+    .spin-center{
+        width:92px;
+        height:92px;
+        font-size:14px;
+    }
+
+    .pointer{
+        border-left-width:17px;
+        border-right-width:17px;
+        border-top-width:40px;
+    }
+
+    .winner-name{
+        font-size:26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-stars"></div>
+
+<div class="app">
+
+<header>
+    <div class="top-btns">
+        <button class="top-btn" onclick="openSettings()">⚙️</button>
+        <button class="top-btn" onclick="toggleSound()" id="soundBtn">🔊</button>
+    </div>
+
+    <div class="logo">عادل</div>
+    <div class="subtitle">🎡 عجلة الحظ للمتسابقين</div>
+</header>
+
+<div class="stats">
+    <div class="stat">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number" id="count">0</div>
+        <div class="stat-label">عدد المتسابقين</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-number" id="winnerCount">0</div>
+        <div class="stat-label">الفائزين</div>
+    </div>
+</div>
+
+<section class="wheel-section">
+
+    <div class="wheel-box">
+
+        <canvas id="wheel" width="700" height="700"></canvas>
+
+        <div class="pointer"></div>
+
+        <button class="spin-center" id="spinBtn" onclick="spinWheel()">
+            اضغط<br>للدوران
+        </button>
+
+    </div>
+
+</section>
+
+<div class="winner">
+    <div class="winner-title">✨ 🏆 الفائز هو 🏆 ✨</div>
+
+    <div class="winner-name" id="winnerName">—</div>
+
+    <div class="winner-socials" id="winnerSocials"></div>
+</div>
+
+<div class="main-grid">
+
+<!-- إضافة متسابق -->
+<div class="panel">
+
+    <div class="panel-title">👤 إضافة متسابق</div>
+
+    <label class="photo-upload" for="photoInput">
+        <div class="photo-icon" id="photoIcon">🖼️</div>
+        <span id="photoText">اضغط لاختيار صورة (اختياري)</span>
+        <img id="preview">
+    </label>
+
+    <input
+        type="file"
+        id="photoInput"
+        accept="image/*"
+        style="display:none"
+        onchange="previewPhoto(event)"
+    >
+
+    <input
+        id="nameInput"
+        type="text"
+        placeholder="اسم المتسابق *"
+    >
+
+    <input
+        id="instagramInput"
+        type="text"
+        placeholder="يوزر إنستغرام مثال: adil_store"
+    >
+
+    <input
+        id="telegramInput"
+        type="text"
+        placeholder="يوزر تيليغرام مثال: adil_store"
+    >
+
+    <button class="btn btn-primary" onclick="addContestant()">
+        ＋ إضافة متسابق
+    </button>
+
+</div>
+
+<!-- المتسابقين -->
+<div class="panel">
+
+    <div class="panel-title">
+        👥 المتسابقين (<span id="listCount">0</span>)
+    </div>
+
+    <div class="contestants" id="contestantsList"></div>
+
+</div>
+
+</div>
+
+<div class="bottom-actions">
+
+    <button class="btn btn-reset" onclick="resetWheel()">
+        🔄 إعادة تعيين
+    </button>
+
+    <button class="btn btn-primary" onclick="spinWheel()">
+        🎡 دوران العجلة
+    </button>
+
+    <button class="btn btn-danger" onclick="clearAll()">
+        🗑️ حذف الكل
+    </button>
+
+</div>
+
+</div>
+
+<!-- الإعدادات -->
+<div class="modal" id="settingsModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeSettings()">✕</button>
+
+        <h2>⚙️ إعدادات عادل</h2>
+
+        <div class="setting">
+            <span>🌙 الوضع الليلي</span>
+
+            <label class="switch">
+                <input
+                    type="checkbox"
+                    id="darkToggle"
+                    checked
+                    onchange="toggleDarkMode()"
+                >
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting">
+            <span>🔊 صوت العجلة</span>
+
+            <label class="switch">
+                <input
+                    type="checkbox"
+                    id="soundToggle"
+                    checked
+                    onchange="toggleSound()"
+                >
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div style="text-align:center;color:#aaa;margin-top:20px;line-height:2">
+            🎡 عجلة الحظ<br>
+            <b style="color:#d15cff">عادل</b><br>
+            جميع البيانات تحفظ تلقائياً على هذا الجهاز.
+        </div>
+
+    </div>
+
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<script>
+
+/* ==========================
+   البيانات
+========================== */
+
+let contestants = JSON.parse(
+    localStorage.getItem("adil_contestants") || "[]"
+);
+
+let winners = JSON.parse(
+    localStorage.getItem("adil_winners") || "[]"
+);
+
+let soundEnabled =
+    localStorage.getItem("adil_sound") !== "false";
+
+let darkMode =
+    localStorage.getItem("adil_dark") !== "false";
+
+let selectedImage = "";
+
+let rotation = 0;
+let spinning = false;
+
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+
+const TAU = Math.PI * 2;
+
+
+/* ==========================
+   تشغيل الصفحة
+========================== */
+
+function init(){
+
+    document.getElementById("soundToggle").checked =
+        soundEnabled;
+
+    document.getElementById("darkToggle").checked =
+        darkMode;
+
+    if(!darkMode){
+        document.body.classList.add("light");
+    }
+
+    renderList();
+    drawWheel();
+}
+
+init();
+
+
+/* ==========================
+   حفظ
+========================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "adil_contestants",
+        JSON.stringify(contestants)
+    );
+
+    localStorage.setItem(
+        "adil_winners",
+        JSON.stringify(winners)
+    );
+}
+
+
+/* ==========================
+   معاينة الصورة
+========================== */
+
+function previewPhoto(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        selectedImage = e.target.result;
+
+        const img = document.getElementById("preview");
+
+        img.src = selectedImage;
+        img.style.display = "block";
+
+        document.getElementById("photoIcon").style.display = "none";
+        document.getElementById("photoText").style.display = "none";
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* ==========================
+   إضافة متسابق
+========================== */
+
+function addContestant(){
+
+    const name =
+        document.getElementById("nameInput").value.trim();
+
+    const instagram =
+        document.getElementById("instagramInput").value.trim();
+
+    const telegram =
+        document.getElementById("telegramInput").value.trim();
+
+    if(!name){
+
+        alert("اكتب اسم المتسابق أولاً");
+        return;
+    }
+
+    contestants.push({
+        id:Date.now(),
+        name:name,
+        instagram:instagram,
+        telegram:telegram,
+        image:selectedImage
+    });
+
+    saveData();
+
+    document.getElementById("nameInput").value="";
+    document.getElementById("instagramInput").value="";
+    document.getElementById("telegramInput").value="";
+
+    selectedImage="";
+
+    document.getElementById("preview").style.display="none";
+    document.getElementById("photoIcon").style.display="block";
+    document.getElementById("photoText").style.display="block";
+
+    document.getElementById("photoInput").value="";
+
+    renderList();
+    drawWheel();
+}
+
+
+/* ==========================
+   عرض المتسابقين
+========================== */
+
+function renderList(){
+
+    const list =
+        document.getElementById("contestantsList");
+
+    list.innerHTML="";
+
+    document.getElementById("count").textContent =
+        contestants.length;
+
+    document.getElementById("listCount").textContent =
+        contestants.length;
+
+    document.getElementById("winnerCount").textContent =
+        winners.length;
+
+    if(contestants.length===0){
+
+        list.innerHTML=`
+            <div class="empty">
+                🎡<br>
+                لا يوجد متسابقون حالياً<br>
+                أضف أول متسابق
+            </div>
+        `;
+
+        return;
+    }
+
+    contestants.forEach((person,index)=>{
+
+        const item =
+            document.createElement("div");
+
+        item.className="contestant";
+
+        let avatar="";
+
+        if(person.image){
+
+            avatar=`
+                <img class="avatar"
+                     src="${person.image}">
+            `;
+
+        }else{
+
+            avatar=`
+                <div class="avatar default-avatar">
+                    👤
+                </div>
+            `;
+        }
+
+        let social="";
+
+        if(person.instagram){
+
+            let user=person.instagram
+                .replace("@","")
+                .trim();
+
+            social+=`
+                <a
+                    class="social instagram"
+                    href="https://instagram.com/${encodeURIComponent(user)}"
+                    target="_blank"
+                    title="Instagram"
+                >◎</a>
+            `;
+        }
+
+        if(person.telegram){
+
+            let user=person.telegram
+                .replace("@","")
+                .trim();
+
+            social+=`
+                <a
+                    class="social telegram"
+                    href="https://t.me/${encodeURIComponent(user)}"
+                    target="_blank"
+                    title="Telegram"
+                >➤</a>
+            `;
+        }
+
+        item.innerHTML=`
+
+            ${avatar}
+
+            <div class="contestant-info">
+
+                <div class="contestant-name">
+                    ${escapeHTML(person.name)}
+                </div>
+
+                <div class="social-row">
+                    ${social}
+                </div>
+
+            </div>
+
+            <button
+                class="delete-btn"
+                onclick="deleteContestant(${person.id})"
+            >
+                🗑️
+            </button>
+        `;
+
+        list.appendChild(item);
+    });
+}
+
+
+/* ==========================
+   حذف متسابق
+========================== */
+
+function deleteContestant(id){
+
+    const person =
+        contestants.find(x=>x.id===id);
+
+    if(!person) return;
+
+    if(!confirm(`حذف المتسابق "${person.name}"؟`))
+        return;
+
+    contestants =
+        contestants.filter(x=>x.id!==id);
+
+    saveData();
+
+    renderList();
+    drawWheel();
+}
+
+
+/* ==========================
+   حذف الكل
+========================== */
+
+function clearAll(){
+
+    if(contestants.length===0){
+        return;
+    }
+
+    if(!confirm("هل تريد حذف جميع المتسابقين؟"))
+        return;
+
+    contestants=[];
+    winners=[];
+
+    saveData();
+
+    document.getElementById("winnerName").textContent="—";
+    document.getElementById("winnerSocials").innerHTML="";
+
+    renderList();
+    drawWheel();
+}
+
+
+/* ==========================
+   رسم العجلة
+========================== */
+
+function drawWheel(){
+
+    const size=canvas.width;
+
+    ctx.clearRect(0,0,size,size);
+
+    const center=size/2;
+
+    const radius=size/2-25;
+
+    /* الحلقة الخارجية */
+
+    ctx.beginPath();
+    ctx.arc(center,center,radius+10,0,TAU);
+
+    ctx.fillStyle="#6c1cb1";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(center,center,radius+2,0,TAU);
+
+    ctx.fillStyle="#170624";
+    ctx.fill();
+
+    /* لا يوجد متسابق */
+    if(contestants.length===0){
+
+        ctx.beginPath();
+        ctx.arc(center,center,radius,0,TAU);
+
+        ctx.fillStyle="#241032";
+        ctx.fill();
+
+        ctx.fillStyle="#aaa";
+        ctx.font="bold 28px Tahoma";
+        ctx.textAlign="center";
+        ctx.textBaseline="middle";
+
+        ctx.fillText(
+            "أضف المتسابقين",
+            center,
+            center
+        );
+
+        drawCenterDecoration();
+        return;
+    }
+
+    const slice=TAU/contestants.length;
+
+    const colors=[
+        "#f04444",
+        "#d12c9c",
+        "#7136d8",
+        "#2758c9",
+        "#139fc1",
+        "#34a66d",
+        "#ef9c20",
+        "#e34b2e"
+    ];
+
+    for(let i=0;i<contestants.length;i++){
+
+        const start=
+            rotation+i*slice;
+
+        const end=start+slice;
+
+        ctx.beginPath();
+
+        ctx.moveTo(center,center);
+
+        ctx.arc(
+            center,
+            center,
+            radius,
+            start,
+            end
+        );
+
+        ctx.closePath();
+
+        ctx.fillStyle=
+            colors[i%colors.length];
+
+        ctx.fill();
+
+        ctx.strokeStyle="#ffffff55";
+        ctx.lineWidth=3;
+        ctx.stroke();
+
+        /* النص */
+
+        ctx.save();
+
+        ctx.translate(center,center);
+
+        const angle=
+            start+slice/2;
+
+        ctx.rotate(angle);
+
+        ctx.textAlign="right";
+        ctx.textBaseline="middle";
+
+        ctx.fillStyle="#fff";
+
+        let fontSize=30;
+
+        if(contestants.length>10)
+            fontSize=21;
+
+        ctx.font=
+            `bold ${fontSize}px Tahoma`;
+
+        let text=contestants[i].name;
+
+        if(text.length>12)
+            text=text.substring(0,12)+"…";
+
+        ctx.fillText(
+            text,
+            radius-35,
+            0
+        );
+
+        ctx.restore();
+    }
+
+    /* الحلقة الداخلية */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        center,
+        center,
+        75,
+        0,
+        TAU
+    );
+
+    ctx.fillStyle="#170725";
+    ctx.fill();
+
+    ctx.strokeStyle="#c33aff";
+    ctx.lineWidth=5;
+    ctx.stroke();
+
+    /* النقاط الخارجية */
+
+    for(let i=0;i<32;i++){
+
+        const angle=
+            i/32*TAU;
+
+        const x=
+            center+Math.cos(angle)*(radius+7);
+
+        const y=
+            center+Math.sin(angle)*(radius+7);
+
+        ctx.beginPath();
+
+        ctx.arc(x,y,6,0,TAU);
+
+        ctx.fillStyle="#fff";
+
+        ctx.fill();
+    }
+}
+
+
+function drawCenterDecoration(){
+
+    const c=canvas.width/2;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        c,
+        c,
+        75,
+        0,
+        TAU
+    );
+
+    ctx.fillStyle="#170725";
+    ctx.fill();
+
+    ctx.strokeStyle="#c33aff";
+    ctx.lineWidth=5;
+    ctx.stroke();
+}
+
+
+/* ==========================
+   دوران العجلة
+========================== */
+
+function spinWheel(){
+
+    if(spinning)
+        return;
+
+    if(contestants.length<2){
+
+        alert("أضف متسابقين على الأقل للدوران");
+        return;
+    }
+
+    spinning=true;
+
+    document.getElementById("spinBtn").disabled=true;
+
+    const startRotation=rotation;
+
+    const extra=
+        TAU*(6+Math.random()*4);
+
+    const randomOffset=
+        Math.random()*TAU;
+
+    const target=
+        startRotation+
+        extra+
+        randomOffset;
+
+    const duration=5000;
+
+    const startTime=performance.now();
+
+    function animate(now){
+
+        const progress=
+            Math.min(
+                (now-startTime)/duration,
+                1
+            );
+
+        /* ease out */
+
+        const ease=
+            1-Math.pow(1-progress,4);
+
+        rotation=
+            startRotation+
+            (target-startRotation)*ease;
+
+        drawWheel();
+
+        if(progress<1){
+
+            requestAnimationFrame(animate);
+
+        }else{
+
+            spinning=false;
+
+            document.getElementById("spinBtn").disabled=false;
+
+            chooseWinner();
+        }
+    }
+
+    playSpinSound();
+
+    requestAnimationFrame(animate);
+}
+
+
+/* ==========================
+   تحديد الفائز
+========================== */
+
+function chooseWinner(){
+
+    const n=contestants.length;
+
+    const slice=TAU/n;
+
+    /*
+       المؤشر في الأعلى = -PI/2
+    */
+
+    let normalized=
+        ((-rotation-Math.PI/2)%TAU+TAU)%TAU;
+
+    let index=
+        Math.floor(normalized/slice);
+
+    if(index<0)
+        index+=n;
+
+    if(index>=n)
+        index=n-1;
+
+    const winner=contestants[index];
+
+    winners.push({
+        id:winner.id,
+        name:winner.name,
+        time:Date.now()
+    });
+
+    saveData();
+
+    document.getElementById("winnerName").textContent=
+        winner.name;
+
+    showWinnerSocials(winner);
+
+    document.getElementById("winnerCount").textContent=
+        winners.length;
+
+    celebration();
+
+    playWinSound();
+}
+
+
+/* ==========================
+   روابط الفائز
+========================== */
+
+function showWinnerSocials(person){
+
+    const box=
+        document.getElementById("winnerSocials");
+
+    box.innerHTML="";
+
+    if(person.instagram){
+
+        let user=
+            person.instagram
+            .replace("@","")
+            .trim();
+
+        box.innerHTML+=`
+            <a
+                class="social instagram"
+                style="width:40px;height:40px"
+                href="https://instagram.com/${encodeURIComponent(user)}"
+                target="_blank"
+            >
+                ◎
+            </a>
+        `;
+    }
+
+    if(person.telegram){
+
+        let user=
+            person.telegram
+            .replace("@","")
+            .trim();
+
+        box.innerHTML+=`
+            <a
+                class="social telegram"
+                style="width:40px;height:40px"
+                href="https://t.me/${encodeURIComponent(user)}"
+                target="_blank"
+            >
+                ➤
+            </a>
+        `;
+    }
+}
+
+
+/* ==========================
+   الاحتفال
+========================== */
+
+function celebration(){
+
+    const box=
+        document.getElementById("confetti");
+
+    box.innerHTML="";
+
+    for(let i=0;i<100;i++){
+
+        const piece=
+            document.createElement("div");
+
+        piece.className="confetti-piece";
+
+        piece.style.left=
+            Math.random()*100+"%";
+
+        piece.style.animationDelay=
+            Math.random()*1.5+"s";
+
+        piece.style.transform=
+            `rotate(${Math.random()*360}deg)`;
+
+        const colors=[
+            "#ff3b81",
+            "#ffd43b",
+            "#8b5cff",
+            "#32d6ff",
+            "#55e36b"
+        ];
+
+        piece.style.background=
+            colors[
+                Math.floor(Math.random()*colors.length)
+            ];
+
+        box.appendChild(piece);
+    }
+
+    setTimeout(()=>{
+        box.innerHTML="";
+    },4500);
+}
+
+
+/* ==========================
+   الأصوات
+========================== */
+
+let audioContext=null;
+
+function getAudio(){
+
+    if(!audioContext){
+
+        audioContext=
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+    }
+
+    return audioContext;
+}
+
+function beep(freq,duration,volume=.04){
+
+    if(!soundEnabled)
+        return;
+
+    try{
+
+        const audio=getAudio();
+
+        const oscillator=
+            audio.createOscillator();
+
+        const gain=
+            audio.createGain();
+
+        oscillator.frequency.value=freq;
+
+        oscillator.type="sine";
+
+        gain.gain.value=volume;
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.start();
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audio.currentTime+duration
+        );
+
+        oscillator.stop(
+            audio.currentTime+duration
+        );
+
+    }catch(e){}
+}
+
+function playSpinSound(){
+
+    if(!soundEnabled)
+        return;
+
+    let count=0;
+
+    const timer=setInterval(()=>{
+
+        beep(
+            180+Math.random()*250,
+            .07,
+            .025
+        );
+
+        count++;
+
+        if(count>22)
+            clearInterval(timer);
+
+    },180);
+}
+
+function playWinSound(){
+
+    if(!soundEnabled)
+        return;
+
+    setTimeout(()=>beep(523,.15,.08),0);
+    setTimeout(()=>beep(659,.15,.08),160);
+    setTimeout(()=>beep(784,.25,.08),320);
+}
+
+
+/* ==========================
+   الإعدادات
+========================== */
+
+function openSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.add("show");
+}
+
+function closeSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.remove("show");
+}
+
+function toggleSound(){
+
+    soundEnabled=!soundEnabled;
+
+    localStorage.setItem(
+        "adil_sound",
+        soundEnabled
+    );
+
+    document.getElementById("soundToggle").checked=
+        soundEnabled;
+
+    document.getElementById("soundBtn").textContent=
+        soundEnabled ? "🔊" : "🔇";
+}
+
+function toggleDarkMode(){
+
+    darkMode=
+        document.getElementById("darkToggle").checked;
+
+    localStorage.setItem(
+        "adil_dark",
+        darkMode
+    );
+
+    document.body.classList.toggle(
+        "light",
+        !darkMode
+    );
+}
+
+
+/* ==========================
+   إعادة تعيين
+========================== */
+
+function resetWheel(){
+
+    rotation=0;
+
+    document.getElementById("winnerName")
+        .textContent="—";
+
+    document.getElementById("winnerSocials")
+        .innerHTML="";
+
+    drawWheel();
+}
+
+
+/* ==========================
+   حماية النص
+========================== */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* ==========================
+   إغلاق النافذة بالنقر خارجها
+========================== */
+
+document
+.getElementById("settingsModal")
+.addEventListener("click",function(e){
+
+    if(e.target===this)
+        closeSettings();
+
+});
+
+
+/* ==========================
+   زر ESC
+========================== */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape")
+        closeSettings();
+
+});
+
+
+/* ==========================
+   تحديث زر الصوت
+========================== */
+
+document.getElementById("soundBtn").textContent=
+    soundEnabled ? "🔊" : "🔇";
+
+</script>
+
+</body>
+</html>
