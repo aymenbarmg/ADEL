@@ -1,258 +1,258 @@
-```html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>رسالة خاصة ❤️</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>رسالة صغيرة 💕</title>
 
 <style>
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Tahoma,Arial,sans-serif;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    min-height:100%;
 }
 
 body{
-    min-height:100vh;
+    min-height:100dvh;
+    background:linear-gradient(135deg,#ffd6e7,#fff0f6,#ffdbea);
+    font-family:Tahoma,Arial,sans-serif;
     display:flex;
-    justify-content:center;
     align-items:center;
-    padding:15px;
+    justify-content:center;
+    padding:12px;
     overflow:hidden;
-
-    background:
-    radial-gradient(circle at 20% 10%,#ffc1d9 0,transparent 30%),
-    radial-gradient(circle at 90% 90%,#ffd6e7 0,transparent 30%),
-    linear-gradient(135deg,#ffe8f0,#fff6f9);
 }
 
-/* القلوب بالخلفية */
-
-body::before{
-    content:"❤️  💕  💗  💖  💕  ❤️";
-    position:fixed;
-    top:12px;
-    left:0;
-    width:100%;
-    text-align:center;
-    font-size:24px;
-    opacity:.35;
-    letter-spacing:5px;
-    pointer-events:none;
-}
+/* الكرت */
 
 .card{
     width:100%;
-    max-width:390px;
-
-    padding:22px;
-
-    background:rgba(255,240,245,.97);
-
-    border:3px solid #ffb6c1;
-
-    border-radius:30px;
-
+    max-width:420px;
+    max-height:calc(100dvh - 24px);
+    background:rgba(255,255,255,.94);
+    border-radius:28px;
+    padding:20px 16px 18px;
+    box-shadow:0 15px 45px rgba(180,70,120,.22);
     text-align:center;
-
-    box-shadow:
-    0 18px 45px rgba(255,70,140,.25),
-    inset 0 0 20px rgba(255,255,255,.8);
-
-    animation:showCard .7s ease;
+    overflow:auto;
+    scrollbar-width:none;
 }
 
-@keyframes showCard{
-    from{
-        opacity:0;
-        transform:scale(.8);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+.card::-webkit-scrollbar{
+    display:none;
 }
+
+/* العنوان */
 
 .title{
-    color:#d63384;
-    font-size:21px;
+    color:#e83e78;
+    font-size:24px;
     font-weight:bold;
-    margin-bottom:10px;
+    margin-bottom:6px;
 }
 
 .subtitle{
-    color:#ff69b4;
-    font-size:13px;
-    margin-bottom:8px;
+    color:#777;
+    font-size:15px;
+    margin-bottom:12px;
 }
+
+/* الصورة */
 
 .image-container{
     width:100%;
-    height:230px;
-
     display:flex;
-    justify-content:center;
     align-items:center;
-
-    margin-bottom:8px;
+    justify-content:center;
+    margin:5px 0 12px;
 }
 
-.image-container img{
-    width:215px;
-    height:215px;
-
+#kitty-img{
+    display:block;
+    width:min(72vw,280px);
+    height:min(72vw,280px);
+    max-width:280px;
+    max-height:280px;
     object-fit:contain;
-
-    transition:.35s;
-
-    filter:drop-shadow(0 8px 12px rgba(255,80,150,.22));
+    border-radius:24px;
+    transition:opacity .2s ease,transform .2s ease;
 }
+
+/* مربع الكلام */
 
 .text-box{
-    min-height:78px;
-
-    padding:14px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:#fff;
-
-    border:2px solid #ff69b4;
-
+    background:#fff0f6;
+    border:2px solid #ffd0e1;
+    color:#d62f6c;
     border-radius:18px;
-
-    color:#333;
-
+    padding:14px 12px;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-size:17px;
-
-    line-height:1.8;
-
-    margin-bottom:20px;
-
-    box-shadow:
-    inset 0 2px 6px rgba(0,0,0,.04),
-    0 5px 12px rgba(255,105,180,.08);
+    line-height:1.7;
+    margin-bottom:12px;
 }
 
-.btn{
-    background:linear-gradient(135deg,#ff69b4,#ff4081);
+/* الأزرار */
 
-    color:white;
-
+button{
+    width:100%;
     border:none;
-
-    padding:12px 35px;
-
-    border-radius:25px;
-
+    border-radius:18px;
+    padding:14px 16px;
+    font-family:inherit;
     font-size:17px;
-
     font-weight:bold;
-
     cursor:pointer;
-
-    box-shadow:0 6px 15px rgba(255,70,140,.3);
-
-    transition:.2s;
+    transition:.15s;
+    touch-action:manipulation;
 }
 
-.btn:hover{
-    transform:translateY(-2px);
+button:active{
+    transform:scale(.96);
 }
 
-.btn:active{
-    transform:scale(.93);
+#action-btn{
+    background:#ff4f91;
+    color:white;
+    box-shadow:0 7px 18px rgba(255,79,145,.28);
 }
-
-/* القلب */
 
 #heart-btn{
     display:none;
-
-    border:none;
-    background:none;
-
-    font-size:70px;
-
-    cursor:pointer;
-
-    animation:heartBeat .75s infinite alternate;
+    background:#ff3d7f;
+    color:white;
+    font-size:30px;
+    min-height:68px;
+    box-shadow:0 8px 22px rgba(255,61,127,.35);
+    animation:pulse 1.2s infinite;
 }
 
-@keyframes heartBeat{
+@keyframes pulse{
 
-    from{
+    0%,100%{
         transform:scale(1);
     }
 
-    to{
-        transform:scale(1.2);
+    50%{
+        transform:scale(1.05);
     }
 
 }
 
+/* القلوب */
+
 .hearts{
-    margin-top:15px;
-    font-size:18px;
-    letter-spacing:4px;
+    font-size:20px;
+    letter-spacing:7px;
+    margin:12px 0 9px;
 }
+
+/* شريط التقدم */
 
 .progress{
     width:100%;
-    height:5px;
-
-    background:#ffd5e3;
-
-    border-radius:10px;
-
-    margin-top:15px;
-
+    height:7px;
+    background:#ffe0eb;
+    border-radius:20px;
     overflow:hidden;
 }
 
 .progress-bar{
-    width:16.6%;
+    width:16.66%;
     height:100%;
-
-    background:linear-gradient(90deg,#ff69b4,#ff4081);
-
-    border-radius:10px;
-
-    transition:.4s;
+    background:#ff4f91;
+    border-radius:20px;
+    transition:width .3s ease;
 }
 
-@media(max-width:450px){
+/* الهاتف */
+
+@media(max-width:380px){
+
+    body{
+        padding:8px;
+    }
 
     .card{
-        padding:18px;
+        max-height:calc(100dvh - 16px);
+        border-radius:23px;
+        padding:16px 12px;
+    }
+
+    .title{
+        font-size:21px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    #kitty-img{
+        width:220px;
+        height:220px;
+    }
+
+    .text-box{
+        font-size:15px;
+        padding:11px 9px;
+    }
+
+    button{
+        font-size:16px;
+        padding:12px;
+    }
+
+}
+
+/* الشاشات القصيرة */
+
+@media(max-height:650px){
+
+    .card{
+        padding-top:12px;
+        padding-bottom:12px;
+    }
+
+    .title{
+        font-size:20px;
     }
 
     .image-container{
-        height:205px;
+        margin:3px 0 7px;
     }
 
-    .image-container img{
+    #kitty-img{
         width:190px;
         height:190px;
     }
 
     .text-box{
-        font-size:16px;
+        min-height:55px;
+        padding:9px;
+        margin-bottom:8px;
+    }
+
+    .hearts{
+        margin:7px 0;
     }
 
 }
 
 </style>
 </head>
-
 
 <body>
 
@@ -266,48 +266,28 @@ body::before{
         إلى ضي ❤️
     </div>
 
-
     <div class="image-container">
-
         <img id="kitty-img" alt="صورة">
-
     </div>
-
 
     <div class="text-box" id="text-content">
         هلو ضي ❤️
     </div>
 
-
-    <button
-        class="btn"
-        id="action-btn"
-        onclick="nextStep()">
-
-         انقر؟
-
+    <button id="action-btn" onclick="nextStep()">
+        انقر؟
     </button>
 
-
-    <button
-        id="heart-btn"
-        onclick="finalStep()">
-
+    <button id="heart-btn" onclick="finalStep()">
         💖
-
     </button>
-
 
     <div class="hearts">
         💗 💕 💗
     </div>
 
-
     <div class="progress">
-        <div
-            class="progress-bar"
-            id="progress-bar">
-        </div>
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
 
 </div>
@@ -316,272 +296,323 @@ body::before{
 <script>
 
 /*
-==================================================
- الصور مدمجة داخل الملف نفسه
- لا تحتاج روابط خارجية
-==================================================
+====================================================
+ الصور
+====================================================
+
+مهم:
+هذه الصور مرسومة بالكامل بالأشكال فقط.
+لا يوجد داخلها أي نص أو كتابة.
+====================================================
 */
 
+function svgImage(content){
+
+    return "data:image/svg+xml;charset=UTF-8," +
+           encodeURIComponent(
+`
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 500 500">
+
+${content}
+
+</svg>
+`
+           );
+}
+
+
+/* الصورة الأولى */
+
+const image1 = svgImage(`
+
+<rect width="500" height="500"
+      rx="80"
+      fill="#ffd6e5"/>
+
+<ellipse cx="250" cy="270"
+         rx="145" ry="130"
+         fill="#ffffff"
+         stroke="#333"
+         stroke-width="8"/>
+
+<path d="M135 180
+         L110 70
+         Q108 55 125 62
+         L205 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<path d="M365 180
+         L390 70
+         Q392 55 375 62
+         L295 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<ellipse cx="195" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="305" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="250" cy="282"
+         rx="13" ry="10"
+         fill="#ffd84d"/>
+
+<ellipse cx="155" cy="300"
+         rx="27" ry="14"
+         fill="#ff9fbc"/>
+
+<ellipse cx="345" cy="300"
+         rx="27" ry="14"
+         fill="#ff9fbc"/>
+
+<circle cx="350" cy="155"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="395" cy="145"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="372" cy="170"
+        r="13"
+        fill="#ff4081"/>
+
+`);
+
+
+/* الصورة الثانية */
+
+const image2 = svgImage(`
+
+<rect width="500" height="500"
+      rx="80"
+      fill="#ffe1ed"/>
+
+<ellipse cx="250" cy="270"
+         rx="145" ry="130"
+         fill="#ffffff"
+         stroke="#333"
+         stroke-width="8"/>
+
+<path d="M135 180
+         L110 70
+         L205 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<path d="M365 180
+         L390 70
+         L295 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<ellipse cx="195" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="305" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="250" cy="282"
+         rx="13" ry="10"
+         fill="#ffd84d"/>
+
+<ellipse cx="158" cy="300"
+         rx="28" ry="14"
+         fill="#ff8faf"/>
+
+<ellipse cx="342" cy="300"
+         rx="28" ry="14"
+         fill="#ff8faf"/>
+
+<path d="M235 320
+         Q250 330 265 320"
+      fill="none"
+      stroke="#333"
+      stroke-width="6"/>
+
+`);
+
+
+/* الصورة الثالثة */
+
+const image3 = svgImage(`
+
+<rect width="500" height="500"
+      rx="80"
+      fill="#ffd5e5"/>
+
+<ellipse cx="250" cy="270"
+         rx="145" ry="130"
+         fill="#ffffff"
+         stroke="#333"
+         stroke-width="8"/>
+
+<path d="M135 180
+         L110 70
+         L205 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<path d="M365 180
+         L390 70
+         L295 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<ellipse cx="195" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="305" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="250" cy="282"
+         rx="13" ry="10"
+         fill="#ffd84d"/>
+
+<circle cx="350" cy="155"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="395" cy="145"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="372" cy="170"
+        r="13"
+        fill="#ff4081"/>
+
+`);
+
+
+/* صورة القلب */
+
+const imageHeart = svgImage(`
+
+<rect width="500" height="500"
+      rx="80"
+      fill="#ffe1ed"/>
+
+<path d="
+M250 400
+
+C225 370 80 280 80 175
+
+C80 95 180 75 225 140
+
+L250 175
+
+L275 140
+
+C320 75 420 95 420 175
+
+C420 280 275 370 250 400 Z"
+
+fill="#ff4081"
+stroke="#ffffff"
+stroke-width="10"/>
+
+`);
+
+
+/* الصورة الأخيرة */
+
+const image5 = svgImage(`
+
+<rect width="500" height="500"
+      rx="80"
+      fill="#ffdbea"/>
+
+<ellipse cx="250" cy="270"
+         rx="150" ry="135"
+         fill="#ffffff"
+         stroke="#333"
+         stroke-width="8"/>
+
+<path d="M130 180
+         L110 70
+         L205 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<path d="M370 180
+         L390 70
+         L295 125 Z"
+      fill="#ffffff"
+      stroke="#333"
+      stroke-width="8"/>
+
+<ellipse cx="195" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="305" cy="260"
+         rx="11" ry="18"
+         fill="#222"/>
+
+<ellipse cx="250" cy="282"
+         rx="13" ry="10"
+         fill="#ffd84d"/>
+
+<ellipse cx="158" cy="300"
+         rx="28" ry="14"
+         fill="#ff8faf"/>
+
+<ellipse cx="342" cy="300"
+         rx="28" ry="14"
+         fill="#ff8faf"/>
+
+<circle cx="350" cy="155"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="395" cy="145"
+        r="28"
+        fill="#ff69b4"/>
+
+<circle cx="372" cy="170"
+        r="13"
+        fill="#ff4081"/>
+
+`);
+
+
+/*
+====================================================
+ قائمة الصور
+====================================================
+*/
 
 const images = [
 
-/* الصورة 1 */
-
-`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-
-<defs>
-<linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#ffd6e5"/>
-<stop offset="1" stop-color="#fff0f6"/>
-</linearGradient>
-</defs>
-
-<rect width="500" height="500" rx="80" fill="url(#bg1)"/>
-
-<circle cx="250" cy="255" r="145" fill="#fff"/>
-
-<!-- الأذنين -->
-
-<path d="M135 170 L115 75 Q110 55 135 65 L205 120 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<path d="M365 170 L385 75 Q390 55 365 65 L295 120 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<!-- الرأس -->
-
-<ellipse cx="250" cy="250" rx="140" ry="125"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<!-- العيون -->
-
-<ellipse cx="195" cy="255" rx="10" ry="17" fill="#222"/>
-<ellipse cx="305" cy="255" rx="10" ry="17" fill="#222"/>
-
-<!-- الأنف -->
-
-<ellipse cx="250" cy="275" rx="12" ry="9" fill="#ffd84d"/>
-
-<!-- الخدود -->
-
-<ellipse cx="155" cy="290" rx="25" ry="13" fill="#ff9fbc" opacity=".7"/>
-<ellipse cx="345" cy="290" rx="25" ry="13" fill="#ff9fbc" opacity=".7"/>
-
-<!-- القوس -->
-
-<circle cx="350" cy="155" r="30" fill="#ff69b4"/>
-<circle cx="395" cy="145" r="30" fill="#ff69b4"/>
-<circle cx="372" cy="170" r="13" fill="#ff4081"/>
-
-<text x="250" y="440"
-text-anchor="middle"
-font-size="30"
-font-family="Tahoma"
-fill="#d63384">
-ضي ❤️
-</text>
-
-</svg>
-`)}`,
-
-
-
-/* الصورة 2 */
-
-`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-
-<rect width="500" height="500" rx="80" fill="#ffe1ed"/>
-
-<circle cx="250" cy="255" r="150" fill="#fff"/>
-
-<path d="M130 175 L110 70 L205 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<path d="M370 175 L390 70 L295 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="250" cy="250" rx="140" ry="125"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="195" cy="260" rx="10" ry="17" fill="#222"/>
-<ellipse cx="305" cy="260" rx="10" ry="17" fill="#222"/>
-
-<ellipse cx="250" cy="278" rx="12" ry="9" fill="#ffd84d"/>
-
-<ellipse cx="158" cy="295" rx="28" ry="14"
-fill="#ff8faf" opacity=".7"/>
-
-<ellipse cx="342" cy="295" rx="28" ry="14"
-fill="#ff8faf" opacity=".7"/>
-
-<path d="M235 315 Q250 325 265 315"
-fill="none" stroke="#333" stroke-width="6"/>
-
-<text x="250" y="420"
-text-anchor="middle"
-font-size="32"
-font-family="Tahoma"
-fill="#d63384">
-🫣
-</text>
-
-</svg>
-`)}`,
-
-
-
-/* الصورة 3 */
-
-`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-
-<rect width="500" height="500" rx="80" fill="#ffd5e5"/>
-
-<circle cx="250" cy="250" r="150" fill="#fff"/>
-
-<path d="M130 170 L110 70 L205 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<path d="M370 170 L390 70 L295 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="250" cy="250" rx="140" ry="125"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="195" cy="255" rx="10" ry="17" fill="#222"/>
-<ellipse cx="305" cy="255" rx="10" ry="17" fill="#222"/>
-
-<ellipse cx="250" cy="275" rx="12" ry="9" fill="#ffd84d"/>
-
-<circle cx="350" cy="155" r="30" fill="#ff69b4"/>
-<circle cx="395" cy="145" r="30" fill="#ff69b4"/>
-<circle cx="372" cy="170" r="13" fill="#ff4081"/>
-
-<text x="250" y="425"
-text-anchor="middle"
-font-size="30"
-font-family="Tahoma"
-fill="#d63384">
-تحبين عادل؟ ❤️
-</text>
-
-</svg>
-`)}`,
-
-
-
-/* الصورة 4 - قلب */
-
-`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-
-<defs>
-
-<radialGradient id="heart">
-<stop offset="0" stop-color="#ff9ac5"/>
-<stop offset="1" stop-color="#ff4081"/>
-</radialGradient>
-
-</defs>
-
-<rect width="500" height="500" rx="80" fill="#ffe1ed"/>
-
-<text x="250" y="110"
-text-anchor="middle"
-font-size="45"
-font-family="Arial"
-fill="#ff69b4">
-❤️
-</text>
-
-<path
-d="M250 390
-C220 355 90 275 90 175
-C90 105 175 85 220 140
-L250 175
-L280 140
-C325 85 410 105 410 175
-C410 275 280 355 250 390Z"
-fill="url(#heart)"
-stroke="#fff"
-stroke-width="10"/>
-
-<text x="250" y="250"
-text-anchor="middle"
-font-size="35"
-font-family="Tahoma"
-font-weight="bold"
-fill="#fff">
-عادل ❤️ ضي
-</text>
-
-<text x="250" y="450"
-text-anchor="middle"
-font-size="25"
-font-family="Tahoma"
-fill="#d63384">
-دوسي على القلب 💖
-</text>
-
-</svg>
-`)}`,
-
-
-
-/* الصورة 5 */
-
-`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-
-<rect width="500" height="500" rx="80" fill="#ffdbea"/>
-
-<circle cx="250" cy="250" r="160" fill="#fff"/>
-
-<path d="M130 175 L110 70 L205 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<path d="M370 175 L390 70 L295 125 Z"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="250" cy="250" rx="140" ry="125"
-fill="#fff" stroke="#333" stroke-width="8"/>
-
-<ellipse cx="195" cy="255" rx="10" ry="17" fill="#222"/>
-<ellipse cx="305" cy="255" rx="10" ry="17" fill="#222"/>
-
-<ellipse cx="250" cy="275" rx="12" ry="9" fill="#ffd84d"/>
-
-<ellipse cx="158" cy="290" rx="28" ry="14"
-fill="#ff8faf"/>
-
-<ellipse cx="342" cy="290" rx="28" ry="14"
-fill="#ff8faf"/>
-
-<circle cx="350" cy="155" r="30" fill="#ff69b4"/>
-<circle cx="395" cy="145" r="30" fill="#ff69b4"/>
-<circle cx="372" cy="170" r="13" fill="#ff4081"/>
-
-<text x="250" y="420"
-text-anchor="middle"
-font-size="35"
-font-family="Tahoma"
-font-weight="bold"
-fill="#d63384">
-أحبج ❤️
-</text>
-
-</svg>
-`)}`
+    image1,
+    image2,
+    image3,
+    imageHeart,
+    image5
 
 ];
 
 
 /*
-==================================================
- ترتيب الرسائل
-==================================================
+====================================================
+ الرسائل
+====================================================
 */
 
 const steps = [
@@ -602,7 +633,7 @@ const steps = [
 
     {
         text:"بس مستحي أسألج إياه 🫣",
-        btnText:"اسالني",
+        btnText:"اسألني",
         image:1,
         type:"button"
     },
@@ -630,23 +661,50 @@ const steps = [
 ];
 
 
+/*
+====================================================
+ المتغيرات
+====================================================
+*/
+
 let step = 0;
 
 
 /*
-==================================================
- تشغيل أول صورة
-==================================================
+====================================================
+ العناصر
+====================================================
 */
 
-document.getElementById("kitty-img").src =
-    images[steps[0].image];
+const kittyImg =
+    document.getElementById("kitty-img");
+
+const textContent =
+    document.getElementById("text-content");
+
+const actionBtn =
+    document.getElementById("action-btn");
+
+const heartBtn =
+    document.getElementById("heart-btn");
+
+const progressBar =
+    document.getElementById("progress-bar");
 
 
 /*
-==================================================
- الزر التالي
-==================================================
+====================================================
+ الصورة الأولى
+====================================================
+*/
+
+kittyImg.src = images[0];
+
+
+/*
+====================================================
+ الانتقال للرسالة التالية
+====================================================
 */
 
 function nextStep(){
@@ -654,17 +712,20 @@ function nextStep(){
     step++;
 
     if(step >= steps.length){
+
         step = 0;
+
     }
 
     updateContent();
+
 }
 
 
 /*
-==================================================
- الضغط على القلب
-==================================================
+====================================================
+ عند الضغط على القلب
+====================================================
 */
 
 function finalStep(){
@@ -672,56 +733,49 @@ function finalStep(){
     step = 5;
 
     updateContent();
+
 }
 
 
 /*
-==================================================
- تحديث الصفحة
-==================================================
+====================================================
+ تحديث الشاشة
+====================================================
 */
 
 function updateContent(){
 
     const current = steps[step];
 
-    const text =
-        document.getElementById("text-content");
 
-    const image =
-        document.getElementById("kitty-img");
+    /*
+    تغيير الكلام
+    */
 
-    const normalButton =
-        document.getElementById("action-btn");
-
-    const heartButton =
-        document.getElementById("heart-btn");
-
-    const progress =
-        document.getElementById("progress-bar");
+    textContent.textContent =
+        current.text;
 
 
     /*
-    تغيير النص
+    تأثير تغيير الصورة
     */
 
-    text.innerText = current.text;
+    kittyImg.style.opacity = "0";
 
-
-    /*
-    تأثير الصورة
-    */
-
-    image.style.opacity = "0";
-    image.style.transform = "scale(.75)";
+    kittyImg.style.transform =
+        "scale(.75)";
 
 
     setTimeout(function(){
 
-        image.src = images[current.image];
+        kittyImg.src =
+            images[current.image];
 
-        image.style.opacity = "1";
-        image.style.transform = "scale(1)";
+        kittyImg.style.opacity =
+            "1";
+
+        kittyImg.style.transform =
+            "scale(1)";
 
     },150);
 
@@ -730,37 +784,57 @@ function updateContent(){
     شريط التقدم
     */
 
-    progress.style.width =
+    progressBar.style.width =
         ((step + 1) / steps.length * 100) + "%";
 
 
     /*
-    زر القلب
+    إظهار زر القلب
     */
 
     if(current.type === "heart"){
 
-        normalButton.style.display = "none";
+        actionBtn.style.display =
+            "none";
 
-        heartButton.style.display = "block";
+        heartBtn.style.display =
+            "block";
 
     }
 
     else{
 
-        normalButton.style.display = "inline-block";
+        actionBtn.style.display =
+            "block";
 
-        normalButton.innerText =
+        actionBtn.textContent =
             current.btnText;
 
-        heartButton.style.display = "none";
+        heartBtn.style.display =
+            "none";
 
     }
 
 }
 
+
+/*
+====================================================
+ منع تحديد الصور
+====================================================
+*/
+
+kittyImg.addEventListener(
+    "contextmenu",
+    function(e){
+
+        e.preventDefault();
+
+    }
+);
+
 </script>
 
 </body>
 </html>
-```
+
